@@ -24,10 +24,7 @@ namespace Algorithems
             /// </summary>
             /// <returns></returns>
             public static bool Search(string text, string prash)
-            {                   
-                if (prash.Length > text.Length)
-                    return false;
-                
+            {
                 for (int i = 0; i < text.Length - prash.Length; i++)
                 {
                     if(Compare(prash, text, i))
