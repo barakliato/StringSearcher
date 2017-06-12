@@ -17,11 +17,7 @@ namespace Algorithems
             return true;
         }
 
-        /// <summary>
-        /// Search for prash in text using Rabin-Karp algorithem
-        /// </summary>
-        /// <returns></returns>
-        public static bool RabinKarpSearch(string text, string prash)
+        public static bool NaiveSearch(string text, string prash)
         {
             for (int i = 0; i < text.Length - prash.Length; i++)
             {
@@ -31,11 +27,28 @@ namespace Algorithems
 
             return false;
         }
+      
+        /// <summary>
+        /// Search for prash in text using Rabin-Karp algorithem
+        /// </summary>
+        /// <returns></returns>
+        public static bool RabinKarpSearch(string text, string prash)
+        {
+            var prashHash = prash.GetHashCode();
+            for (int i = 0; i < text.Length - prash.Length; i++)
+            {
+                var hash = text.Substring(i, prash.Length).GetHashCode();
+                if (prashHash == hash)
+                    return true;
+            }
+
+            return false;
+        }
 
         public class BoyerMoore
         {
             private readonly string _prash;
-            private readonly IDictionary<char, int> _badMatchTable;                     
+            private readonly IDictionary<char, int> _badMatchTable;
 
             /// <summary>
             /// Boyer Moore algorithm.
@@ -43,7 +56,7 @@ namespace Algorithems
             /// </summary>
             /// <param name="prash">The value we are searching</param>
             public BoyerMoore(string prash)
-            {              
+            {
                 _prash = prash;
                 _badMatchTable = new Dictionary<char, int>();
                 for (int i = 0; i < prash.Length - 1; i++)
@@ -53,7 +66,7 @@ namespace Algorithems
                     if (_badMatchTable.ContainsKey(c))
                         _badMatchTable[c] = length;
                     else
-                        _badMatchTable.Add(c, length);                    
+                        _badMatchTable.Add(c, length);
                 }
 
                 var last = prash[prash.Length - 1];
