@@ -39,7 +39,7 @@ namespace Algorithems
 
             /// <summary>
             /// Boyer Moore algorithm.
-            /// using bad match table and good suffix table
+            /// using bad match table
             /// </summary>
             /// <param name="prash">The value we are searching</param>
             public BoyerMoore(string prash)
