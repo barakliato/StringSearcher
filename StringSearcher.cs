@@ -105,5 +105,56 @@ namespace Algorithems
                 return false;
             }
         }
+
+        /// <summary>
+        /// Knuth–Morris–Pratt algorithm
+        /// </summary>
+        public class KMP
+        {
+            private readonly string _prash;
+            private readonly int[] _skipTable;
+            
+            
+            public KMP(string prash)
+            {
+                _prash = prash;
+                _skipTable = new int[prash.Length];
+                
+                //build the skip table
+                int i = 0, j = 1;
+                while (j < _skipTable.Length)
+                {
+                    if (prash[i] == prash[j])
+                    {
+                        _skipTable[j] = _skipTable[i] + 1;
+                        i++;
+                    }
+
+                    j++;
+                }
+            }
+
+            public bool Search(string text)
+            {
+                for (int i = 0; i < text.Length; i++)
+                {
+                    bool found = true;
+                    for (int j = 0; j < _prash.Length; j++)
+                    {
+                        if(_prash[j] != text[i+j])
+                        {
+                            i += _skipTable[j];
+                            found = false;
+                            break;
+                        }
+                    }
+
+                    if (found)
+                        return true;
+                }
+
+                return false;
+            }
+        }        
     }
 }
